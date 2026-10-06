@@ -1,0 +1,56 @@
+{
+  "as_of": "2024-06-01 00:00:00-06:00",
+  "recommendations": [
+    {
+      "rule_id": "efficiency_gap",
+      "title": "PUE 1.072 vs best-achieved 1.019",
+      "severity": "high",
+      "category": "efficiency",
+      "action": "Overhead is 74.0% above this facility's own best demonstrated performance (121.0 MWh in 30 days, about 1472 MWh/yr if sustained). Compare current control settings with the best-performing period. Note: the best-achieved baseline includes the period before the overhead step-change on 2024-03-28, so most of this gap is that change (see the commissioning-review recommendation).",
+      "evidence": {
+        "pue": 1.0719,
+        "best_pue": 1.0187,
+        "avoidable_mwh": 121.02,
+        "pct_of_overhead": 74.0,
+        "annualised_mwh": 1472.5,
+        "valid_days": 30,
+        "baseline_predates_step_change": true
+      },
+      "est_savings_mwh": 121.02,
+      "period_start": "2024-05-03 00:00:00-06:00",
+      "period_end": "2024-06-01 00:00:00-06:00"
+    },
+    {
+      "rule_id": "sustained_overhead_increase",
+      "title": "Commissioning review: overhead step-change from 2024-03-28",
+      "severity": "high",
+      "category": "sustained_change",
+      "action": "Overhead ran 181 kW above expected for 100 h (18.1 MWh). Confirm whether this followed an intended change (new equipment, setpoints, fan-wall speeds). If not intended, revert or re-tune.",
+      "evidence": {
+        "excess_mwh": 18.12,
+        "mean_excess_kw": 181.2,
+        "hours": 100,
+        "confidence": "medium"
+      },
+      "est_savings_mwh": null,
+      "period_start": "2024-03-28 14:00:00-06:00",
+      "period_end": "2024-04-01 17:00:00-06:00"
+    },
+    {
+      "rule_id": "hvac_share",
+      "title": "HVAC now 80% of overhead (was 12% a year earlier)",
+      "severity": "medium",
+      "category": "efficiency",
+      "action": "Review fan-wall, fan-coil and make-up-air-unit operation: HVAC power grew from 10 kW to 188 kW over the year.",
+      "evidence": {
+        "hvac_share_pct": 80.0,
+        "prev_share_pct": 11.9,
+        "hvac_kw": 187.9,
+        "prev_hvac_kw": 9.6
+      },
+      "est_savings_mwh": null,
+      "period_start": "2024-05-02 01:00:00-06:00",
+      "period_end": "2024-06-01 00:00:00-06:00"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "as_of": "2025-08-28 22:00:00-06:00",
+  "recommendations": [
+    {
+      "rule_id": "efficiency_gap",
+      "title": "PUE 1.069 vs best-achieved 1.060",
+      "severity": "medium",
+      "category": "efficiency",
+      "action": "Overhead is 13.9% above this facility's own best demonstrated performance (17.8 MWh in 30 days, about 216 MWh/yr if sustained). Compare current control settings with the best-performing period.",
+      "evidence": {
+        "pue": 1.0694,
+        "best_pue": 1.0598,
+        "avoidable_mwh": 17.79,
+        "pct_of_overhead": 13.9,
+        "annualised_mwh": 216.4,
+        "valid_days": 30
+      },
+      "est_savings_mwh": 17.79,
+      "period_start": "2025-07-30 00:00:00-06:00",
+      "period_end": "2025-08-28 00:00:00-06:00"
+    },
+    {
+      "rule_id": "operational_overhead_excess",
+      "title": "Recurring cooling-overhead excursions (5 events in 30 days)",
+      "severity": "medium",
+      "category": "operations",
+      "action": "Investigate cooling-plant behaviour during the flagged windows (2.5 MWh above expected). Check pump and fan control loops and any manual setpoint overrides.",
+      "evidence": {
+        "events": 5,
+        "excess_mwh": 2.5,
+        "hours": 53
+      },
+      "est_savings_mwh": 2.5,
+      "period_start": "2025-08-08 10:00:00-06:00",
+      "period_end": "2025-08-12 20:00:00-06:00"
+    },
+    {
+      "rule_id": "hot_weather",
+      "title": "Overhead +14 kW on hot days (>= 25 C)",
+      "severity": "low",
+      "category": "efficiency",
+      "action": "Overhead averages 14 kW more above 25 C than at 5-15 C (742 hot hours in the last 120 days). Evaluate cooling-tower and pump scheduling for hot afternoons. Savings assume 25% of the uplift is recoverable (an assumption, not a measurement).",
+      "evidence": {
+        "uplift_kw": 14.5,
+        "hot_hours": 742,
+        "mild_overhead_kw": 162.9,
+        "assumed_recoverable_fraction": 0.25
+      },
+      "est_savings_mwh": 2.68,
+      "period_start": "2025-04-30 23:00:00-06:00",
+      "period_end": "2025-08-28 22:00:00-06:00"
+    }
+  ]
+}

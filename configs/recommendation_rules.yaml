@@ -1,0 +1,74 @@
+# GreenDC recommendation rules: thresholds and wording.
+
+global:
+  grid_kg_co2_per_kwh: null   # set your grid's emission factor to add CO2 estimates
+
+meter_fault:
+  lookback_days: 30
+  high_hours: 72
+  title: "Inspect {meter}"
+  action: >-
+    Check calibration and logging for the {meter}: {hours} h affected since {first}.
+    These hours are excluded from PUE figures until the meter is verified.
+
+sustained_overhead_increase:
+  lookback_days: 90
+  title: "Commissioning review: overhead step-change from {start}"
+  action: >-
+    Overhead ran {mean_kw:.0f} kW above expected for {hours} h ({excess_mwh:.1f} MWh).
+    Confirm whether this followed an intended change (new equipment, setpoints,
+    fan-wall speeds). If not intended, revert or re-tune.
+
+operational_overhead_excess:
+  lookback_days: 30
+  min_events: 2
+  high_mwh: 5.0
+  title: "Recurring cooling-overhead excursions ({n} events in {days} days)"
+  action: >-
+    Investigate cooling-plant behaviour during the flagged windows
+    ({excess_mwh:.1f} MWh above expected). Check pump and fan control loops
+    and any manual setpoint overrides.
+
+efficiency_gap:
+  lookback_days: 30
+  min_valid_days: 14          # need at least 2 weeks of trustworthy days
+  min_day_coverage_pct: 50    # a day counts only if >= 50 % of its hours are valid
+  min_avoidable_mwh: 1.0      # ignore trivially small gaps
+  min_pct_of_overhead: 5.0
+  high_pct_of_overhead: 15.0
+  title: "PUE {pue:.3f} vs best-achieved {best:.3f}"
+  action: >-
+    Overhead is {pct:.1f}% above this facility's own best demonstrated performance
+    ({mwh:.1f} MWh in {days} days, about {annual:.0f} MWh/yr if sustained).
+    Compare current control settings with the best-performing period.
+
+hvac_share:
+  lookback_days: 30
+  min_share_pct: 50.0
+  min_increase_pts: 15.0
+  title: "HVAC now {share:.0f}% of overhead (was {prev:.0f}% a year earlier)"
+  action: >-
+    Review fan-wall, fan-coil and make-up-air-unit operation: HVAC power grew
+    from {prev_kw:.0f} kW to {kw:.0f} kW over the year.
+
+hot_weather:
+  lookback_days: 120          # short window keeps one facility configuration
+  hot_temp_c: 25
+  mild_band_c: [5, 15]
+  min_hot_hours: 48
+  min_uplift_kw: 8.0
+  recoverable_fraction: 0.25  # ASSUMPTION, stated in the output
+  title: "Overhead +{uplift:.0f} kW on hot days (>= {hot} C)"
+  action: >-
+    Overhead averages {uplift:.0f} kW more above {hot} C than at {lo}-{hi} C
+    ({hours} hot hours in the last {days} days). Evaluate cooling-tower and pump
+    scheduling for hot afternoons. Savings assume {frac:.0%} of the uplift is
+    recoverable (an assumption, not a measurement).
+
+load_drops:
+  lookback_days: 30
+  min_events: 2
+  title: "{n} unplanned load drops in {days} days"
+  action: >-
+    Review job-scheduler and power-distribution logs for these windows. Repeated
+    drops leave committed cooling capacity idle and may indicate power-quality issues.

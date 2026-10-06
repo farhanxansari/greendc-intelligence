@@ -1,0 +1,33 @@
+{
+  "as_of": "2020-09-15 00:00:00-06:00",
+  "recommendations": [
+    {
+      "rule_id": "meter_fault",
+      "title": "Inspect overhead meters (under-reporting)",
+      "severity": "high",
+      "category": "data_quality",
+      "action": "Check calibration and logging for the overhead meters (under-reporting): 89 h affected since 2020-08-15. These hours are excluded from PUE figures until the meter is verified.",
+      "evidence": {
+        "events": 1,
+        "hours": 89
+      },
+      "est_savings_mwh": null,
+      "period_start": "2020-08-15 03:00:00-06:00",
+      "period_end": "2020-08-18 19:00:00-06:00"
+    },
+    {
+      "rule_id": "meter_fault",
+      "title": "Inspect cooling meter (stuck readings)",
+      "severity": "high",
+      "category": "data_quality",
+      "action": "Check calibration and logging for the cooling meter (stuck readings): 629 h affected since 2020-08-18. These hours are excluded from PUE figures until the meter is verified.",
+      "evidence": {
+        "events": 2,
+        "hours": 629
+      },
+      "est_savings_mwh": null,
+      "period_start": "2020-08-18 22:00:00-06:00",
+      "period_end": "2020-09-15 00:00:00-06:00"
+    }
+  ]
+}
