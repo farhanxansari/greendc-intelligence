@@ -1,0 +1,23 @@
+Metadata-Version: 2.4
+Name: greendc
+Version: 0.1.0
+Requires-Python: >=3.10
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: pyarrow
+Requires-Dist: scikit-learn
+Requires-Dist: xgboost
+Requires-Dist: lightgbm
+Requires-Dist: fastapi
+Requires-Dist: uvicorn[standard]
+Requires-Dist: pydantic
+Requires-Dist: pyyaml
+Requires-Dist: joblib
+Requires-Dist: plotly
+Provides-Extra: dl
+Requires-Dist: tensorflow; extra == "dl"
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: jupyter; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"

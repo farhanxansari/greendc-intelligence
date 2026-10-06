@@ -1,0 +1,19 @@
+[project]
+name = "greendc"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "pandas", "numpy", "pyarrow", "scikit-learn", "xgboost", "lightgbm",
+  "fastapi", "uvicorn[standard]", "pydantic", "pyyaml", "joblib", "plotly",
+]
+
+[project.optional-dependencies]
+dl = ["tensorflow"]
+dev = ["pytest", "ruff", "jupyter", "pre-commit"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
