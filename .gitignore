@@ -1,6 +1,7 @@
 .venv/
-data/
-models_store/
+/data/
+/models_store/
+*.egg-info/
 __pycache__/
 .ipynb_checkpoints/
 .env

@@ -1,0 +1,5 @@
+detector,new_fa_hours,pct_of_test_hours
+isolation_forest,0.0,0.0
+load_change,0.0,0.0
+meter_fault,0.0,0.0
+overhead_residual,3.466666666666667,0.06

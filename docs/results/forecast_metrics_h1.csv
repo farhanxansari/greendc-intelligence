@@ -1,0 +1,13 @@
+model,split,MAE_kW,RMSE_kW,MAPE_%,R2,skill_vs_persistence_%
+xgboost,test,24.4608,42.3973,0.9286,0.9505,4.0932
+lightgbm,test,24.4696,42.5263,0.9292,0.9502,4.0588
+random_forest,test,24.751,41.2893,0.9409,0.9531,2.9554
+persistence_1h,test,25.5048,44.4894,0.9696,0.9455,0.0
+linear_regression,test,25.9676,43.4566,0.9902,0.948,-1.8147
+seasonal_naive_168h,test,172.7364,294.3249,7.1892,-1.3836,-577.2701
+xgboost,val,29.7587,67.859,1.3771,0.9792,4.0688
+lightgbm,val,29.8205,68.2029,1.3785,0.979,3.8694
+persistence_1h,val,31.0208,70.6234,1.428,0.9775,0.0
+linear_regression,val,31.4086,68.7018,1.4445,0.9787,-1.2501
+random_forest,val,31.9737,67.6804,1.557,0.9793,-3.0717
+seasonal_naive_168h,val,417.0815,699.2127,22.6577,-1.2043,-1244.5213
