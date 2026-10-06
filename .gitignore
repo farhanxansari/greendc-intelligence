@@ -1,0 +1,7 @@
+.venv/
+data/
+models_store/
+__pycache__/
+.ipynb_checkpoints/
+.env
+node_modules/
