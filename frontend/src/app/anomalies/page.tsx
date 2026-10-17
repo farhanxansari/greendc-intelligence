@@ -95,7 +95,7 @@ export default function AnomaliesPage() {
         <LoadState loading={an.loading} error={an.error} height="h-40" />
         {an.data && (
           <div className="max-h-[520px] overflow-auto">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-sm [&_td]:px-3 [&_th]:px-3">
               <thead className="sticky top-0 bg-white text-xs uppercase text-slate-500">
                 <tr>
                   <th className="pb-2 font-medium">Start</th>

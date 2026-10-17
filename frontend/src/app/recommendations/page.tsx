@@ -12,8 +12,13 @@ const PRESETS = [
   { label: "15 Sep 2020 (meter faults)", value: "2020-09-15" },
 ];
 
-const fmtEvidence = (v: unknown) =>
-  typeof v === "number" ? fmtNum(v, Number.isInteger(v) ? 0 : 2) : typeof v === "boolean" ? (v ? "yes" : "no") : String(v);
+// PUE differences live in the 3rd-4th decimal, so small numbers keep 4 decimals
+const fmtEvidence = (v: unknown) => {
+  if (typeof v === "boolean") return v ? "yes" : "no";
+  if (typeof v !== "number") return String(v);
+  if (Number.isInteger(v)) return fmtNum(v);
+  return v.toLocaleString("en-US", { maximumFractionDigits: Math.abs(v) < 10 ? 4 : 2 });
+};
 
 export default function RecommendationsPage() {
   const [asOf, setAsOf] = useState("");
@@ -27,11 +32,19 @@ export default function RecommendationsPage() {
     <>
       <PageHeader
         title="Recommendations"
-        subtitle={recs.data ? `Evidence-backed actions as of ${fmtDate(recs.data.as_of)}. Replay any date to see what the system would have advised.` : "Loading..."}
+        subtitle={
+          recs.data
+            ? `Evidence-backed actions as of ${fmtDate(recs.data.as_of)}. Replay any date to see what the system would have advised.`
+            : "Loading..."
+        }
       />
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        <Segmented options={PRESETS} value={PRESETS.some((p) => p.value === asOf) ? asOf : "custom"} onChange={setAsOf} />
+        <Segmented
+          options={PRESETS}
+          value={PRESETS.some((p) => p.value === asOf) ? asOf : "custom"}
+          onChange={setAsOf}
+        />
         <label className="flex items-center gap-2 text-xs text-slate-600">
           or pick a date
           <input
@@ -84,7 +97,9 @@ export default function RecommendationsPage() {
           </Card>
         ))}
         {recs.data && list.length === 0 && (
-          <Card><p className="text-sm text-slate-500">No recommendations for this date: all rules within thresholds.</p></Card>
+          <Card>
+            <p className="text-sm text-slate-500">No recommendations for this date: all rules within thresholds.</p>
+          </Card>
         )}
       </div>
     </>
