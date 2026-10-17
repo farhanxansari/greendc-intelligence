@@ -30,7 +30,7 @@ def main() -> None:
         label = " ".join(step)
         print(f"\n=== {label} ===", flush=True)
         t0 = time.time()
-        result = subprocess.run([sys.executable, "-m", *step])
+        result = subprocess.run([sys.executable, "-m", *step], check=False)
         if result.returncode != 0:
             sys.exit(f"Step failed: {label}")
         print(f"--- done in {time.time() - t0:.0f}s", flush=True)

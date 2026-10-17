@@ -24,8 +24,18 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
 
-from greendc.config import (HORIZON, HOURLY_FILE, MODEL_START, MODELS_DIR, PRED_DIR,
-                            RESULTS_DIR, SEED, TRAIN_END, VAL_END, ts)
+from greendc.config import (
+    HORIZON,
+    HOURLY_FILE,
+    MODEL_START,
+    MODELS_DIR,
+    PRED_DIR,
+    RESULTS_DIR,
+    SEED,
+    TRAIN_END,
+    VAL_END,
+    ts,
+)
 from greendc.features.forecast_features import feature_columns, make_forecast_frame
 
 warnings.filterwarnings("ignore", message=".*eval_set.*deprecated.*")

@@ -20,8 +20,15 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
-from greendc.config import HOURLY_FILE, MODEL_START, PRED_DIR, RESULTS_DIR, SEED, TRAIN_END, ts
-from greendc.pue.metrics import COMPONENTS
+from greendc.config import (
+    HOURLY_FILE,
+    MODEL_START,
+    PRED_DIR,
+    RESULTS_DIR,
+    SEED,
+    TRAIN_END,
+    ts,
+)
 
 Z_THRESH = 4.0
 RESID_MIN_PCT = 5.0            # statistical rule (model hours only)

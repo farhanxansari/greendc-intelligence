@@ -13,14 +13,18 @@ from typing import Literal
 import joblib
 import numpy as np
 import pandas as pd
-from fastapi.responses import RedirectResponse
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 
 from greendc.config import HOURLY_FILE, MODELS_DIR, PRED_DIR, RESULTS_DIR, TZ, ts
 from greendc.features.forecast_features import make_forecast_frame
-from greendc.pue.metrics import (component_breakdown, exclude_meter_faults, period_pue,
-                                 pue_by_temp_band)
+from greendc.pue.metrics import (
+    component_breakdown,
+    exclude_meter_faults,
+    period_pue,
+    pue_by_temp_band,
+)
 from greendc.recommend.engine import load_events
 from greendc.recommend.engine import run as run_recommendations
 
@@ -119,7 +123,7 @@ def meta() -> dict:
         "data_start": df.index.min().isoformat(),
         "data_end": df.index.max().isoformat(),
         "timezone": TZ,
-        "hours": int(len(df)),
+        "hours": len(df),
         "source": "NLR ESIF HPC data centre PUE dataset (Clark & Strelka 2025, DOI 10.7799/3015212)",
     }
 
@@ -231,7 +235,7 @@ def anomalies(start: str | None = None, end: str | None = None,
         sel = sel[sel["detector"].isin(detector.split(","))]
     by_category = {k: int(v) for k, v in sel.groupby("category").size().items()}
     sel = sel.sort_values("start", ascending=False).head(limit)
-    return {"count": int(len(sel)), "by_category": by_category,
+    return {"count": len(sel), "by_category": by_category,
             "events": to_records(sel.round({"impact_kwh": 1, "peak_score": 2}), None)}
 
 

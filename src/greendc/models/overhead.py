@@ -17,8 +17,17 @@ import pandas as pd
 from lightgbm import LGBMRegressor
 from sklearn.metrics import mean_absolute_error
 
-from greendc.config import (HOURLY_FILE, MODEL_START, MODELS_DIR, PRED_DIR, RESULTS_DIR,
-                            SEED, TRAIN_END, VAL_END, ts)
+from greendc.config import (
+    HOURLY_FILE,
+    MODEL_START,
+    MODELS_DIR,
+    PRED_DIR,
+    RESULTS_DIR,
+    SEED,
+    TRAIN_END,
+    VAL_END,
+    ts,
+)
 
 warnings.filterwarnings("ignore", message=".*eval_set.*deprecated.*")
 REF_LAG, REF_WINDOW = 24, 168

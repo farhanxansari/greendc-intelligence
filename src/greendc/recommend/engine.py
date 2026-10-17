@@ -17,10 +17,15 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from greendc.config import HOURLY_FILE, RESULTS_DIR, ROOT, TZ, ts
-from greendc.pue.metrics import (COMPONENTS, FILTER_PUMP_KW, efficiency_gap,
-                                 exclude_meter_faults, period_pue)
 from greendc.anomaly.detect import SUSTAINED_HOURS
+from greendc.config import HOURLY_FILE, RESULTS_DIR, ROOT, TZ, ts
+from greendc.pue.metrics import (
+    COMPONENTS,
+    FILTER_PUMP_KW,
+    efficiency_gap,
+    exclude_meter_faults,
+    period_pue,
+)
 
 RULES_FILE = ROOT / "configs" / "recommendation_rules.yaml"
 SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2}
@@ -63,7 +68,7 @@ def r_meter_fault(ctx: dict, cfg: dict) -> list[Recommendation]:
             severity="high" if hours >= cfg["high_hours"] else "medium",
             title=cfg["title"].format(meter=meter),
             action=cfg["action"].format(meter=meter, hours=hours, first=f"{first:%Y-%m-%d}"),
-            evidence={"events": int(len(g)), "hours": hours},
+            evidence={"events": len(g), "hours": hours},
             period_start=str(first), period_end=str(g["end"].max())))
     return out
 
@@ -102,7 +107,7 @@ def r_operational_overhead_excess(ctx: dict, cfg: dict) -> list[Recommendation]:
         severity="high" if mwh >= cfg["high_mwh"] else "medium",
         title=cfg["title"].format(n=len(sel), days=cfg["lookback_days"]),
         action=cfg["action"].format(excess_mwh=mwh),
-        evidence={"events": int(len(sel)), "excess_mwh": round(mwh, 2),
+        evidence={"events": len(sel), "excess_mwh": round(mwh, 2),
                   "hours": int(sel["duration_h"].sum())},
         est_savings_mwh=round(mwh, 2),
         period_start=str(sel["start"].min()), period_end=str(sel["end"].max()))]
@@ -208,7 +213,7 @@ def r_load_drops(ctx: dict, cfg: dict) -> list[Recommendation]:
         rule_id="load_drops", category="operations", severity="medium",
         title=cfg["title"].format(n=len(sel), days=cfg["lookback_days"]),
         action=cfg["action"],
-        evidence={"events": int(len(sel)), "hours": int(sel["duration_h"].sum()),
+        evidence={"events": len(sel), "hours": int(sel["duration_h"].sum()),
                   "lost_load_mwh": round(float(-sel["impact_kwh"].sum() / 1000), 2)},
         period_start=str(sel["start"].min()), period_end=str(sel["end"].max()))]
 
