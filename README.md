@@ -3,7 +3,6 @@
 **AI-driven sustainable data-centre operations and energy optimisation**
 
 B.Tech CSE (AI & ML) capstone project, IILM University, Greater Noida (2026-27)
-
 Team: Md Farhan Ansari, Aman Kumar Prasad, Syed Maaz | Guide: Dr. Pranav Shrivastava
 
 GreenDC Intelligence analyses 10 years of real metered data from a high-performance computing data centre to **forecast energy use, detect anomalies, track efficiency (PUE), and recommend actions**, all in one operator dashboard. It supports human decisions; it does not control equipment.
@@ -14,7 +13,7 @@ GreenDC Intelligence analyses 10 years of real metered data from a high-performa
 
 | Module | Question it answers | Method |
 |---|---|---|
-| **Forecasting** | How much power will we need in the next 1 h / 24 h? | Linear Regression, Random Forest, XGBoost, LightGBM vs persistence baselines |
+| **Forecasting** | How much power will we need in the next 1 h / 24 h? | Linear Regression, Random Forest, XGBoost, LightGBM, LSTM vs persistence baselines |
 | **Anomaly detection** | Is something wrong right now? | Model residuals, robust z-scores, Isolation Forest, meter-fault rules |
 | **PUE tracking** | Are we getting more or less efficient? | Energy-weighted PUE, component breakdown, avoidable-overhead metric |
 | **Recommendations** | What should the operator do? | YAML-configured rule engine with evidence and estimated savings |
@@ -28,12 +27,17 @@ GreenDC Intelligence analyses 10 years of real metered data from a high-performa
 
 **Forecasting** (held-out 2025 test period; skill = MAE reduction vs persistence)
 
-| Horizon | Best model | MAE | MAPE | Skill vs persistence |
+| Model | Day-ahead (24 h) MAE | Day-ahead skill | Hour-ahead (1 h) MAE | Hour-ahead skill |
 |---|---|---|---|---|
-| Day-ahead (24 h) | LightGBM / XGBoost | 110-112 kW | 4.9 % | **+7.6 to +8.5 %** |
-| Hour-ahead (1 h) | XGBoost | 24.5 kW | 0.93 % | **+4.1 %** |
+| **LightGBM** | 110.4 kW | **+8.5 %** | 24.5 kW | +4.1 % |
+| **XGBoost** | 111.6 kW | +7.6 % | 24.5 kW | **+4.1 %** |
+| LSTM (72 h window) | 116.0 kW | +4.3 % | 25.5 kW | 0.0 % |
+| Persistence (baseline) | 120.8 kW | 0 % | 25.5 kW | 0 % |
+| Linear Regression | 125.5 kW | -3.9 % | 26.0 kW | -1.8 % |
+| Random Forest | 126.7 kW | -4.9 % | 24.8 kW | +3.0 % |
 
-Predicting the *ratio change vs persistence* instead of raw kW made models robust to IT regime shifts (1.2 to 3.7 to 2.6 MW). It turned XGBoost from -162 % to +8 % skill.
+- Predicting the *ratio change vs persistence* instead of raw kW made models robust to IT regime shifts (1.2 to 3.7 to 2.6 MW). It turned XGBoost from -162 % to +8 % skill.
+- The LSTM, trained under the identical protocol, beat persistence day-ahead but not gradient boosting, and could not improve on persistence hour-ahead (MAPE already 0.97 %). With about 32,000 training samples, gradient boosting is the better choice.
 
 **Anomaly detection**: synthetic faults injected into 2025 data, 30 trials per type
 
@@ -88,6 +92,8 @@ cd frontend && npm install && cd ..
 python -m greendc.pipeline --with-eval
 ```
 
+Add `--with-lstm` to also train the LSTM (needs `pip install -e ".[dl]"`).
+
 **Start the API and dashboard:**
 
 ```cmd
@@ -108,6 +114,7 @@ src/greendc/
   data/esif.py                    download, glitch removal, hourly resampling, PUE
   features/forecast_features.py   leakage-free features, ratio target
   models/forecast.py              baselines + LR, RF, XGBoost, LightGBM
+  models/lstm.py                  LSTM forecaster under the same protocol
   models/overhead.py              expected-overhead model (anomaly baseline)
   anomaly/detect.py               4 detectors -> events with confidence + category
   anomaly/evaluate.py             synthetic-fault injection, recall with 95% CI
@@ -137,7 +144,6 @@ Minute-level IT, cooling, HVAC, pump and lighting power plus outdoor weather, No
 
 ## Roadmap
 
-- LSTM forecaster under the same evaluation protocol (completes Objective 2).
 - What-if simulation of the facility under Indian city climates (Objective 7).
 
 ## Limitations
